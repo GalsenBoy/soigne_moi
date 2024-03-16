@@ -1,0 +1,17 @@
+#service-content {
+    display: flex;
+    gap: 2em;
+    flex-wrap: wrap;
+
+    #service {
+        max-width: 250px;
+        border: 2px solid;
+        padding: 1em;
+
+        p {
+            text-align: center;
+            padding-top: .5em;
+            font-size: larger;
+        }
+    }
+}
