@@ -23,10 +23,12 @@ export default function SignIn() {
       }
       const data = await response.json();
       const token = data.access_token;
+      //   localStorage.setItem("accessToken", token);
+
       // Stockez le jeton d'accès dans un cookie sécurisé
       document.cookie = `accessToken=${token}; path=/; Secure; SameSite=Strict`;
       // Redirigez l'utilisateur vers la page d'accueil ou vers le profil
-      window.location.href = "/";
+      window.location.href = "/profile";
     } catch (error: unknown) {
       console.error("Error signing in:", error);
       // setError(error);
