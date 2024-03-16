@@ -1,4 +1,8 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
 import React, { useState } from "react";
 
 export default function SignIn() {
@@ -37,24 +41,38 @@ export default function SignIn() {
 
   return (
     <div>
-      <h1>Sign in</h1>
-      <form onSubmit={handleSubmit} className="text-black">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Sign in</button>
-      </form>
+      <h1 className="text-2xl text-center my-10">Se connecter</h1>
+      <div className=" max-w-screen-sm	 mx-auto">
+        <form onSubmit={handleSubmit} className="text-black">
+          <Input
+            className="mb-4 "
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            className="mt-4 "
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <div className="flex mt-5 items-center justify-between">
+            <Button className=" bg-sky-500" type="submit">
+              SE CONNECTER
+            </Button>
+            <Link
+              className="underline underline-offset-2 text-xl"
+              href="/register"
+            >
+              S'incrire
+            </Link>
+          </div>
+        </form>
+      </div>
       {error && <p>{error}</p>}
     </div>
   );

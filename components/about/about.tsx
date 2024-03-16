@@ -1,0 +1,17 @@
+/* eslint-disable react/no-unescaped-entities */
+import Assistance from "../assistance/assistance";
+import "./about.scss";
+export default function About() {
+  return (
+    <section>
+      <div id="about-content">
+        <h1>
+          Bienvenue sur le site web de l'Hôpital Sainte-Catherine, votre
+          destination de confiance pour des soins de santé exceptionnels dans un
+          environnement moderne et bienveillant.
+        </h1>
+        <Assistance />
+      </div>
+    </section>
+  );
+}
