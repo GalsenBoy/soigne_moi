@@ -2,6 +2,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+// import { Cookie } from "next/font/google";
+import Cookies from "js-cookie";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -27,11 +29,8 @@ export default function SignIn() {
       }
       const data = await response.json();
       const token = data.access_token;
-      //   localStorage.setItem("accessToken", token);
 
-      // Stockez le jeton d'accès dans un cookie sécurisé
-      document.cookie = `accessToken=${token}; path=/; Secure; SameSite=Strict`;
-      // Redirigez l'utilisateur vers la page d'accueil ou vers le profil
+      Cookies.set("accessToken", token);
       window.location.href = "/profile";
     } catch (error: unknown) {
       console.error("Error signing in:", error);
