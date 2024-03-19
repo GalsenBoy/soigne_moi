@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import Sejour from "../Sejour";
 import Assistance from "../assistance/assistance";
 import "./about.scss";
 export default function About() {
@@ -11,6 +12,7 @@ export default function About() {
           environnement moderne et bienveillant.
         </h1>
         <Assistance />
+        <Sejour />
       </div>
     </section>
   );
