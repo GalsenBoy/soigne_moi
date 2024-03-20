@@ -5,11 +5,13 @@ import { Input } from "@/components/ui/input";
 // import { Cookie } from "next/font/google";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const route = useRouter();
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e: any) => {
@@ -31,7 +33,7 @@ export default function SignIn() {
       const token = data.access_token;
 
       Cookies.set("accessToken", token);
-      window.location.href = "/profile";
+      route.push("/profile");
     } catch (error: unknown) {
       console.error("Error signing in:", error);
       // setError(error);

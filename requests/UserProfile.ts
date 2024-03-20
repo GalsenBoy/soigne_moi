@@ -2,10 +2,11 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import UserType from "@/types/user-type";
 
 export default function useFetchUserProfile() {
     const router = useRouter();
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState<UserType>()
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -35,5 +36,6 @@ export default function useFetchUserProfile() {
         fetchUserProfile();
     }
         , [router, user]);
+    // console.log(user);
     return user
 }

@@ -1,83 +1,105 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
-
+import { useForm, SubmitHandler } from "react-hook-form";
 import Cookies from "js-cookie";
+import useFetchUserProfile from "@/requests/UserProfile";
+import Link from "next/link";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { Specialite } from "@/types/specialite-type";
+import SejourType from "@/types/sejour-type";
 
-type Inputs = {
-  dateEntree: Date;
-  dateSortie: Date;
-  motif: string;
-  specialite: string;
-};
-
-/* eslint-disable react/no-unescaped-entities */
 export default function Sejour() {
+  const specialites = Object.values(Specialite);
+  const user = useFetchUserProfile();
   const {
     register,
     handleSubmit,
-    watch,
+
     formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  } = useForm<SejourType>();
+  const onSubmit: SubmitHandler<SejourType> = async (data) => {
     try {
       const token = Cookies.get("accessToken");
       if (!token) {
-        throw new Error("Access token not found in cookies");
+        throw new Error("No token found");
       }
+      console.log(data);
+
       const response = await fetch("http://localhost:8000/sejour", {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       });
       if (!response.ok) {
-        console.log(response);
-        throw new Error(
-          `Unable to create sejour. Server responded with status: ${response.status}`
-        );
+        const errorData = await response.json();
+        throw new Error(errorData.message);
       }
-    } catch (error) {
-      console.error("Error creating sejour:", error);
+      console.log("Sejour created successfully");
+    } catch (error: unknown) {
+      console.error("Error signing in:", error);
+      // setError(error);
     }
   };
 
-  console.log(watch("dateEntree")); // wa
   return (
-    <section>
-      <h1>Créer votre séjour</h1>
+    <section className="mt-16">
+      <h2 className="text-3xl text-center">Créer votre Sejour</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        action=""
         className="max-w-screen-md mx-auto [&>div*4] gap-8 flex flex-col items-center justify-center w-full h-full p-4 bg-white rounded-md shadow-md"
       >
         <div>
-          <label htmlFor="">Date d'entree</label>
-          <Input
-            type="datetime-local"
-            {...register("dateEntree", { required: true })}
-          />
+          <label>Date d'entrée</label>
+          <Input type="date" {...register("dateEntree", { required: true })} />
+          {errors.dateEntree && (
+            <span className="text-red-500">Ce champ est obligatoire</span>
+          )}
         </div>
+
         <div>
-          <label htmlFor="">Date de sortie</label>
-          <Input
-            type="datetime-local"
-            {...register("dateSortie", { required: true })}
-          />
+          <label>Date de sortie</label>
+          <Input type="date" {...register("dateSortie", { required: true })} />
+          {errors.dateSortie && (
+            <span className="text-red-500">Ce champ est obligatoire</span>
+          )}
         </div>
+
         <div>
-          <label htmlFor="">Motif</label>
-          <Input {...register("motif", { required: true })} />
+          <label>Motif</label>
+          <Input type="text" {...register("motif", { required: true })} />
+          {errors.motif && (
+            <span className="text-red-500">Ce champ est obligatoire</span>
+          )}
         </div>
+
         <div>
-          <label htmlFor="">Spécialité</label>
-          <Input {...register("specialite", { required: true })} />
+          <select
+            className="border-2 border-black rounded-md p-2 w-full"
+            {...register("specialite", { required: true })}
+          >
+            <option value="">Choisir une spécialité</option>
+            {specialites.map((specialite, key) => (
+              <option key={key} value={specialite}>
+                {specialite}
+              </option>
+            ))}
+          </select>
+          {errors.specialite && (
+            <span className="text-red-500">Ce champ est obligatoire</span>
+          )}
         </div>
-        <Button type="submit" className="uppercase">
-          Créer séjour
-        </Button>
+
+        {user ? (
+          <Button type="submit">Enregistrer</Button>
+        ) : (
+          <Button>
+            <Link href="/login">Enregistrer</Link>
+          </Button>
+        )}
       </form>
     </section>
   );
