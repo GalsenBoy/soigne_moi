@@ -3,17 +3,20 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import useFetchUserProfile from "@/requests/UserProfile";
+import { Specialite } from "@/types/specialite-type";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 type Inputs = {
   firstName: string;
   lastName: string;
-  specialite: string;
+  specialite: Specialite;
   matricule: string;
 };
 
 export default function AjouterMedecin() {
   const user = useFetchUserProfile();
+  const specialites = Object.values(Specialite);
+
   // console.log(user);
   const {
     register,
@@ -31,7 +34,6 @@ export default function AjouterMedecin() {
         body: JSON.stringify(data),
       });
       if (!response.ok) {
-        console.log(response);
         throw new Error(
           `Unable to create medecin. Server responded with status: ${response.status}`
         );
@@ -41,8 +43,6 @@ export default function AjouterMedecin() {
       console.error("Error creating medecin:", error);
     }
   };
-
-  // console.log(watch("firstName")); // watch input value by passing the name of it
 
   if (user && (user as any).roles === "admin") {
     return (
@@ -61,8 +61,17 @@ export default function AjouterMedecin() {
             <Input {...register("firstName", { required: true })} />
           </div>
           <div>
-            <label htmlFor="specialite">Spécialité</label>
-            <Input {...register("specialite", { required: true })} />
+            <select
+              className="border-2 border-black rounded-md p-2 w-full"
+              {...register("specialite", { required: true })}
+            >
+              <option value="">Choisir une spécialité</option>
+              {specialites.map((specialite, key) => (
+                <option key={key} value={specialite}>
+                  {specialite}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label htmlFor="matricule">Matricule</label>
