@@ -6,27 +6,26 @@ import useFetchUserProfile from "@/requests/UserProfile";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-type Inputs = {
-  dateEntree: Date;
-  dateSortie: Date;
-  motif: string;
-  specialite: string;
-};
+import { Specialite } from "@/types/specialite-type";
+import SejourType from "@/types/sejour-type";
 
 export default function Sejour() {
+  const specialites = Object.values(Specialite);
   const user = useFetchUserProfile();
   const {
     register,
     handleSubmit,
-    watch,
+
     formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  } = useForm<SejourType>();
+  const onSubmit: SubmitHandler<SejourType> = async (data) => {
     try {
       const token = Cookies.get("accessToken");
       if (!token) {
         throw new Error("No token found");
       }
+      console.log(data);
+
       const response = await fetch("http://localhost:8000/sejour", {
         method: "POST",
         headers: {
@@ -56,25 +55,42 @@ export default function Sejour() {
         <div>
           <label>Date d'entrée</label>
           <Input type="date" {...register("dateEntree", { required: true })} />
-          {errors.dateEntree && <span>Ce champ est obligatoire</span>}
+          {errors.dateEntree && (
+            <span className="text-red-500">Ce champ est obligatoire</span>
+          )}
         </div>
 
         <div>
           <label>Date de sortie</label>
           <Input type="date" {...register("dateSortie", { required: true })} />
-          {errors.dateSortie && <span>Ce champ est obligatoire</span>}
+          {errors.dateSortie && (
+            <span className="text-red-500">Ce champ est obligatoire</span>
+          )}
         </div>
 
         <div>
           <label>Motif</label>
           <Input type="text" {...register("motif", { required: true })} />
-          {errors.motif && <span>Ce champ est obligatoire</span>}
+          {errors.motif && (
+            <span className="text-red-500">Ce champ est obligatoire</span>
+          )}
         </div>
 
         <div>
-          <label>Spécialite</label>
-          <Input type="text" {...register("specialite", { required: true })} />
-          {errors.specialite && <span>Ce champ est obligatoire</span>}
+          <select
+            className="border-2 border-black rounded-md p-2 w-full"
+            {...register("specialite", { required: true })}
+          >
+            <option value="">Choisir une spécialité</option>
+            {specialites.map((specialite, key) => (
+              <option key={key} value={specialite}>
+                {specialite}
+              </option>
+            ))}
+          </select>
+          {errors.specialite && (
+            <span className="text-red-500">Ce champ est obligatoire</span>
+          )}
         </div>
 
         {user ? (
