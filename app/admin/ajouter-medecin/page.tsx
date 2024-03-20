@@ -31,7 +31,6 @@ export default function AjouterMedecin() {
         body: JSON.stringify(data),
       });
       if (!response.ok) {
-        console.log(response);
         throw new Error(
           `Unable to create medecin. Server responded with status: ${response.status}`
         );
@@ -41,8 +40,6 @@ export default function AjouterMedecin() {
       console.error("Error creating medecin:", error);
     }
   };
-
-  // console.log(watch("firstName")); // watch input value by passing the name of it
 
   if (user && (user as any).roles === "admin") {
     return (
