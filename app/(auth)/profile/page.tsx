@@ -4,12 +4,11 @@ import useFetchUserProfile from "@/requests/UserProfile";
 import SejourType from "@/types/sejour-type";
 import React from "react";
 import Cookies from "js-cookie";
+import { today } from "@/utils/today";
 
 const Profile = () => {
   const user = useFetchUserProfile();
   const [sejours, setSejour] = React.useState<SejourType[] | null>(null);
-  const today = new Date().toISOString().split("T")[0];
-  // console.log(today);
 
   const getUserSejour = async () => {
     try {
@@ -38,12 +37,14 @@ const Profile = () => {
   }, []);
   return (
     <div>
-      <h1>User Profile</h1>
+      <h1 className="text-2xl font-semibold text-gray-800">Profile</h1>
       {user && (
         <div>
-          <p>Email: {user.email}</p>
-          <p>Prénom : {user.firstName}</p>
-          <p>Role : {user.roles}</p>
+          <div className="absolute h-dvh bg-slate-600">
+            <p>Email: {user.email}</p>
+            <p>Prénom : {user.firstName}</p>
+            <p>Role : {user.roles}</p>
+          </div>
           <div className="p-4 bg-white shadow-md rounded-md max-w-screen-md mx-auto">
             {sejours?.map((sejour: SejourType) => (
               <div key={sejour.id}>

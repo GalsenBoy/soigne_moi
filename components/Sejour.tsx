@@ -8,6 +8,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Specialite } from "@/types/specialite-type";
 import SejourType from "@/types/sejour-type";
+import { today } from "@/utils/today";
 
 export default function Sejour() {
   const specialites = Object.values(Specialite);
@@ -54,7 +55,11 @@ export default function Sejour() {
       >
         <div>
           <label>Date d'entrée</label>
-          <Input type="date" {...register("dateEntree", { required: true })} />
+          <Input
+            min={today}
+            type="date"
+            {...register("dateEntree", { required: true })}
+          />
           {errors.dateEntree && (
             <span className="text-red-500">Ce champ est obligatoire</span>
           )}
@@ -62,7 +67,11 @@ export default function Sejour() {
 
         <div>
           <label>Date de sortie</label>
-          <Input type="date" {...register("dateSortie", { required: true })} />
+          <Input
+            min={today}
+            type="date"
+            {...register("dateSortie", { required: true })}
+          />
           {errors.dateSortie && (
             <span className="text-red-500">Ce champ est obligatoire</span>
           )}
