@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import useFetchUserProfile from "@/requests/UserProfile";
 import { Specialite } from "@/types/specialite-type";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 type Inputs = {
@@ -16,12 +17,11 @@ type Inputs = {
 export default function AjouterMedecin() {
   const user = useFetchUserProfile();
   const specialites = Object.values(Specialite);
-
-  // console.log(user);
+  const route = useRouter();
   const {
     register,
     handleSubmit,
-    watch,
+
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -84,5 +84,5 @@ export default function AjouterMedecin() {
       </div>
     );
   }
-  return <h1>Vous n'avez pas les droits pour accéder à cette page</h1>;
+  return route.push("/");
 }

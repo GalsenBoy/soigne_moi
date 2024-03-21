@@ -1,13 +1,10 @@
-"use client";
+"use client"
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
 import UserType from "@/types/user-type";
 
 export default function useFetchUserProfile() {
-    const router = useRouter();
-    const [user, setUser] = useState<UserType>()
-
+    const [user, setUser] = useState<UserType>();
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
@@ -24,18 +21,15 @@ export default function useFetchUserProfile() {
                 if (!response.ok) {
                     throw new Error(`Unable to fetch user profile. Server responded with status: ${response.status}`);
                 }
-
-                const userData = await response.json();
-                setUser(userData);
+                setUser(await response.json());
 
             } catch (error) {
                 console.error("Error fetching user profile:", error);
             }
         };
-
-        fetchUserProfile();
-    }
-        , [router, user]);
-    // console.log(user);
-    return user
+        if (!user) {
+            fetchUserProfile();
+        }
+    }, [user]);
+    return user;
 }
