@@ -36,19 +36,19 @@ const Profile = () => {
     getUserSejour();
   }, []);
   return (
-    <div>
-      <h1 className="text-2xl font-semibold text-gray-800">Profile</h1>
+    <div className="relative">
+      {/* <h1 className="text-2xl font-semibold text-gray-800">Profile</h1> */}
       {user && (
-        <div>
-          <div className="absolute h-dvh bg-slate-600">
-            <p>Email: {user.email}</p>
-            <p>Prénom : {user.firstName}</p>
-            <p>Role : {user.roles}</p>
+        <div className="flex">
+          <div className=" w-1/4 p-2" style={{ background: "#71A3D0" }}>
+            <p className="text-xl font-medium uppercase">{user.firstName}</p>
+            <p className="uppercase text-md">{user.lastName}</p>
+            <p className="font-medium"> {user.email}</p>
           </div>
-          <div className="p-4 bg-white shadow-md rounded-md max-w-screen-md mx-auto">
+          <div className="p-4 bg-white shadow-md rounded-md w-3/5">
             {sejours?.map((sejour: SejourType) => (
               <div key={sejour.id}>
-                {today >= sejour.dateSortie && today <= sejour.dateEntree && (
+                {today >= sejour.dateEntree && today <= sejour.dateSortie && (
                   <div className="text-green-500 font-semibold text-lg">
                     <h3>Séjour en cours</h3>
                   </div>

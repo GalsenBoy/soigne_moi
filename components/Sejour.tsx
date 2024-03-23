@@ -9,10 +9,13 @@ import { Input } from "./ui/input";
 import { Specialite } from "@/types/specialite-type";
 import SejourType from "@/types/sejour-type";
 import { today } from "@/utils/today";
+import { use } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Sejour() {
   const specialites = Object.values(Specialite);
   const user = useFetchUserProfile();
+  const route = useRouter();
   const {
     register,
     handleSubmit,
@@ -40,6 +43,7 @@ export default function Sejour() {
         throw new Error(errorData.message);
       }
       console.log("Sejour created successfully");
+      route.push("/profile");
     } catch (error: unknown) {
       console.error("Error signing in:", error);
       // setError(error);
