@@ -15,7 +15,10 @@ export default function Header() {
     <header>
       <div id="header-contain">
         <div id="logo">
-          <Image src="/next.svg" width={100} height={100} alt="logo" />
+          <Link href="/">
+            {" "}
+            <Image src="/next.svg" width={100} height={100} alt="logo" />
+          </Link>
         </div>
         <div className="flex gap-2">
           {user?.roles === "admin" && (
@@ -24,7 +27,13 @@ export default function Header() {
             </Button>
           )}
           {user ? (
-            <Button onClick={handleLogout}>Se déconnecter</Button>
+            <div className="flex gap-8">
+              {" "}
+              <Button>
+                <Link href={"/profile"}>Mon profile</Link>
+              </Button>
+              <Button onClick={handleLogout}>Se déconnecter</Button>
+            </div>
           ) : (
             <Link id="login" href="/login">
               Se connecter
