@@ -7,6 +7,7 @@ import MedecinType from "@/types/medecin-type";
 import SejourType from "@/types/sejour-type";
 import React from "react";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 export default function AdminPage() {
   const [sejours, setSejour] = React.useState<SejourType[] | null>(null);
@@ -38,6 +39,8 @@ export default function AdminPage() {
         const errorData = await response.json();
         throw new Error(errorData.message);
       }
+      console.log("successfully assigned doctor to sejour");
+      setSelectedMedecinId("");
     } catch (error) {
       console.error("Error assigning doctor to sejour:", error);
     }
@@ -45,14 +48,16 @@ export default function AdminPage() {
 
   React.useEffect(() => {
     getAllData({ endpoint: "sejour", setter: setSejour });
-    getAllData({ endpoint: "medecin", setter: setMedecin });
+    getAllData({ endpoint: "medecin/limit", setter: setMedecin });
   }, []);
-  console.log(selectedMedecinId);
 
   {
     return user?.roles === "admin" ? (
       <section>
         <h1 className="text-2xl font-semibold text-gray-800">Admin Page</h1>
+        <Button className="m-2">
+          <Link href={"/admin/ajouter-medecin"}>Ajouter un médecin</Link>
+        </Button>
         <div className="p-4 bg-white shadow-md rounded-md max-w-screen-md mx-auto">
           {sejours?.map((sejour: SejourType) => (
             <div

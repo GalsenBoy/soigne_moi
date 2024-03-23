@@ -44,10 +44,12 @@ export default function AjouterMedecin() {
     }
   };
 
-  if (user && (user as any).roles === "admin") {
+  if (user?.roles === "admin") {
     return (
       <div>
-        <h1>Ajouter un médecin</h1>
+        <h1 className="text-2xl text-center font-medium my-8">
+          Ajouter un médecin
+        </h1>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="max-w-screen-md mx-auto [&>div*4] gap-8 flex flex-col items-center justify-center w-full h-full p-4 bg-white rounded-md shadow-md"
@@ -84,5 +86,4 @@ export default function AjouterMedecin() {
       </div>
     );
   }
-  return route.push("/");
 }

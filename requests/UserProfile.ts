@@ -1,16 +1,26 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import UserType from "@/types/user-type";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+
+const authRoutes = ["/", "/mentions-legales"];
 
 export default function useFetchUserProfile() {
     const [user, setUser] = useState<UserType>();
+    const router = useRouter();
+    const pathName = usePathname()
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
                 const token = Cookies.get("accessToken");
                 if (!token) {
-                    throw new Error("Access token not found in cookies");
+                    // Check if the current route is not an authenticated route
+                    if (!authRoutes.includes(pathName)) {
+                        router.push("/login");
+                    }
+                    return;
                 }
                 const response = await fetch("http://localhost:8000/auth/profile", {
                     method: "GET",
@@ -30,6 +40,6 @@ export default function useFetchUserProfile() {
         if (!user) {
             fetchUserProfile();
         }
-    }, [user]);
+    }, [user, router, pathName]);
     return user;
 }
