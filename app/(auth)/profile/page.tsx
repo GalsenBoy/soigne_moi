@@ -41,11 +41,14 @@ const Profile = () => {
       {user && (
         <div className="flex">
           <div className=" w-1/4 p-2" style={{ background: "#71A3D0" }}>
-            <p className="text-xl font-medium uppercase">{user.firstName}</p>
-            <p className="uppercase text-md">{user.lastName}</p>
+            <p className="text-2xl font-medium uppercase">{user.firstName}</p>
+            <p className="uppercase text-lg">{user.lastName}</p>
             <p className="font-medium"> {user.email}</p>
           </div>
           <div className="p-4 bg-white shadow-md rounded-md w-3/5">
+            <h1 className="text-2xl font-semibold text-gray-800 my-8 underline-offset-2 underline">
+              Mes sejours
+            </h1>
             {sejours?.map((sejour: SejourType) => (
               <div key={sejour.id}>
                 {today >= sejour.dateEntree && today <= sejour.dateSortie && (

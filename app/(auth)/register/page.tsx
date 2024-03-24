@@ -1,4 +1,8 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 type Inputs = {
@@ -9,7 +13,8 @@ type Inputs = {
   zipCode: string;
 };
 
-export default function App() {
+export default function Register() {
+  const route = useRouter();
   const {
     register,
     handleSubmit,
@@ -28,30 +33,54 @@ export default function App() {
       if (!response.ok) {
         throw new Error("Unable to register user");
       }
-      window.location.href = "/login";
+      route.push("/login");
+      console.log("User registered successfully");
     } catch (error) {
       console.error("Error registering user:", error);
-      window.location.href = "/register";
     }
   };
 
-  console.log(watch("firstName")); // watch input value by passing the name of it
-
   return (
-    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {/* register your input into the hook by invoking the "register" function */}
-      <input {...register("firstName", { required: true })} />
-      <input {...register("lastName", { required: true })} />
-      <input type="email" {...register("email", { required: true })} />
-      <input type="password" {...register("password", { required: true })} />
-      <input {...register("zipCode", { required: true })} />
-      {/* include validation with required or other standard HTML validation rules */}
+    <section>
+      <h1 className="text-center text-2xl my-10">S'inscrire</h1>
+      <div className=" max-w-screen-sm mx-auto my-4">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            placeholder="Prénom"
+            className="mb-4 "
+            {...register("firstName", { required: true })}
+          />
+          <Input
+            placeholder="Nom"
+            className="mb-4 "
+            {...register("lastName", { required: true })}
+          />
+          <Input
+            placeholder="Email"
+            className="mb-4 "
+            type="email"
+            {...register("email", { required: true })}
+          />
+          <Input
+            placeholder="Mot de passe"
+            className="mb-4 "
+            type="password"
+            {...register("password", { required: true })}
+          />
+          <Input
+            placeholder="Code postal"
+            className="mb-4 "
+            {...register("zipCode", { required: true })}
+          />
 
-      {/* errors will return when field validation fails  */}
-      {/* {errors.exampleRequired && <span>This field is required</span>} */}
-
-      <input type="submit" />
-    </form>
+          <Button
+            className="bg-sky-500 hover:text-sky-500 hover:bg-white border border-sky-500 mt-4 "
+            type="submit"
+          >
+            S'INSCRIRE
+          </Button>
+        </form>
+      </div>
+    </section>
   );
 }

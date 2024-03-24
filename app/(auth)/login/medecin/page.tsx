@@ -1,42 +1,39 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function SignIn() {
-  const pathName = usePathname();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const route = useRouter();
+  const [matricule, setMatricule] = useState("");
   const [error, setError] = useState(null);
+  const pathName = usePathname();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
     try {
-      const response = await fetch("http://localhost:8000/auth/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "http://localhost:8000/auth/signin/medecin",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ matricule }),
+        }
+      );
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message);
       }
       const data = await response.json();
-      const token = data.access_token;
-
-      Cookies.set("accessToken", token);
+      //   const token = data.access_token;
+      Cookies.set("accessToken", data.access_token);
       route.push("/profile");
     } catch (error: unknown) {
       // setError(error);
-      console.error("Error signing in:", error);
     }
   };
 
@@ -52,7 +49,7 @@ export default function SignIn() {
                 : "bg-white border-2 border-sky-500 text-sky-500"
             }
           >
-            Patient
+            <Link href={"/login"}>Patient</Link>
           </Button>
           <Button
             className={
@@ -61,43 +58,35 @@ export default function SignIn() {
                 : "bg-white border-2 border-sky-500 text-sky-500"
             }
           >
-            <Link href="/login/medecin">Medecin</Link>
+            Medecin
           </Button>
         </div>
-        <form onSubmit={handleSubmit} className="text-black">
-          <Input
-            className="mb-4 "
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            className="mt-4 "
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <div className="flex mt-5 items-center justify-between">
+        <form onSubmit={handleSubmit}>
+          <div className="mb-6">
+            <label htmlFor="email" className="block mb-2">
+              Matricule
+            </label>
+            <input
+              type="type"
+              id="type"
+              name="type"
+              placeholder="Matricule"
+              value={matricule}
+              onChange={(e) => setMatricule(e.target.value)}
+              className="w-full p-2 border-2 border-gray-300 rounded"
+            />
+          </div>
+          <div className="mb-6">
             <Button
-              className=" bg-sky-500 hover:text-sky-500 hover:bg-white"
+              className="bg-sky-500 hover:bg-white hover:text-sky-500 hover:border-sky-500 hover:border-2 border-sky-500 border-2"
               type="submit"
             >
-              SE CONNECTER
+              Se connecter
             </Button>
-            <Link
-              className="underline underline-offset-2 text-xl"
-              href={"/register"}
-            >
-              S'incrire
-            </Link>
           </div>
+          {error && <p className="text-red-500">{error}</p>}
         </form>
       </div>
-      {error && <p>{error}</p>}
     </section>
   );
 }
