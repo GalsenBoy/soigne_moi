@@ -7,6 +7,12 @@ header {
         justify-content: space-between;
         align-items: center;
 
+        #logo {
+            position: relative;
+            width: 75px;
+            height: 75px;
+        }
+
         #login {
             padding: 0.8em 1em;
             border-radius: 25px;

@@ -11,12 +11,12 @@ export default function Header() {
   const user = useFetchUserProfile();
 
   return (
-    <header className="relative">
+    <header>
       <div id="header-contain" className="">
         <div id="logo">
           <Link href="/">
             {" "}
-            <Image src="/next.svg" width={100} height={100} alt="logo" />
+            <Image src="/logo.png" fill alt="logo" />
           </Link>
         </div>
         <div className="flex gap-2">
@@ -39,9 +39,11 @@ export default function Header() {
               </Button>
             </div>
           ) : (
-            <Link id="login" href="/login">
-              Se connecter
-            </Link>
+            <div>
+              <Button className="bg-sky-600 hover:bg-white hover:text-sky-600">
+                <Link href={"/login"}>Se connecter</Link>
+              </Button>
+            </div>
           )}
         </div>
       </div>
