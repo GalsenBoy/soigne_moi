@@ -5,8 +5,6 @@ import UserType from "@/types/user-type";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
-const authRoutes = ["/", "/mentions-legales"];
-
 export default function useFetchUserProfile() {
     const [user, setUser] = useState<UserType>();
     const router = useRouter();
@@ -16,11 +14,7 @@ export default function useFetchUserProfile() {
             try {
                 const token = Cookies.get("accessToken");
                 if (!token) {
-                    // Check if the current route is not an authenticated route
-                    if (!authRoutes.includes(pathName)) {
-                        router.push("/login");
-                    }
-                    return;
+                    throw new Error("No access token found in cookies. User is not authenticated.");
                 }
                 const response = await fetch("http://localhost:8000/auth/profile", {
                     method: "GET",
@@ -32,7 +26,6 @@ export default function useFetchUserProfile() {
                     throw new Error(`Unable to fetch user profile. Server responded with status: ${response.status}`);
                 }
                 setUser(await response.json());
-
             } catch (error) {
                 console.error("Error fetching user profile:", error);
             }

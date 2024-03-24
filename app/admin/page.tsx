@@ -55,7 +55,7 @@ export default function AdminPage() {
     return user?.roles === "admin" ? (
       <section>
         <h1 className="text-2xl font-semibold text-gray-800">Admin Page</h1>
-        <Button className="m-2">
+        <Button className="m-2 bg-gray-600 hover:bg-white hover:text-gray-600">
           <Link href={"/admin/ajouter-medecin"}>Ajouter un médecin</Link>
         </Button>
         <div className="p-4 bg-white shadow-md rounded-md max-w-screen-md mx-auto">
@@ -96,7 +96,10 @@ export default function AdminPage() {
                     </option>
                   ))}
                 </select>
-                <Button onClick={() => assignerMedecinAuSejour(sejour.id)}>
+                <Button
+                  className="bg-gray-600 hover:bg-white hover:text-gray-600"
+                  onClick={() => assignerMedecinAuSejour(sejour.id)}
+                >
                   Assigner à ce médecin
                 </Button>
               </div>
