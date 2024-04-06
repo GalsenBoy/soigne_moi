@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import useFetchUserProfile from "@/requests/UserProfile";
 import { Specialite } from "@/types/specialite-type";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 type Inputs = {
@@ -17,6 +18,7 @@ type Inputs = {
 export default function AjouterMedecin() {
   const user = useFetchUserProfile();
   const specialites = Object.values(Specialite);
+  const [error, setError] = useState(null);
   const route = useRouter();
   const {
     register,
@@ -39,7 +41,8 @@ export default function AjouterMedecin() {
         );
       }
       console.log("Medecin créé avec succès", response);
-    } catch (error) {
+    } catch (error: any) {
+      setError(error.message);
       console.error("Error creating medecin:", error);
     }
   };
@@ -83,6 +86,7 @@ export default function AjouterMedecin() {
             Créer médecin
           </Button>
         </form>
+        {error && <p className="text-red-500">{error}</p>}
       </div>
     );
   }

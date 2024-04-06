@@ -3,7 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
+import { useForm, SubmitHandler, set } from "react-hook-form";
 
 type Inputs = {
   firstName: string;
@@ -14,6 +15,7 @@ type Inputs = {
 };
 
 export default function Register() {
+  const [error, setError] = useState(null);
   const route = useRouter();
   const {
     register,
@@ -35,8 +37,9 @@ export default function Register() {
       }
       route.push("/login");
       console.log("User registered successfully");
-    } catch (error) {
-      console.error("Error registering user:", error);
+    } catch (error: any) {
+      setError(error.message);
+      // console.error("Error registering user:", error);
     }
   };
 
@@ -81,6 +84,7 @@ export default function Register() {
           </Button>
         </form>
       </div>
+      {error && <p className="text-red-500">{error}</p>}{" "}
     </section>
   );
 }

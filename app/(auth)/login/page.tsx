@@ -34,8 +34,8 @@ export default function SignIn() {
 
       Cookies.set("accessToken", token);
       route.push("/profile");
-    } catch (error: unknown) {
-      // setError(error);
+    } catch (error: any) {
+      setError(error.message);
       console.error("Error signing in:", error);
     }
   };
@@ -73,6 +73,7 @@ export default function SignIn() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+
           <Input
             className="mt-4 "
             type="password"
@@ -81,6 +82,7 @@ export default function SignIn() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+
           <div className="flex mt-5 items-center justify-between">
             <Button
               className=" bg-sky-500 hover:text-sky-500 hover:bg-white"
@@ -97,7 +99,7 @@ export default function SignIn() {
           </div>
         </form>
       </div>
-      {error && <p>{error}</p>}
+      {error && <p className="text-red-500">{error}</p>}{" "}
     </section>
   );
 }
