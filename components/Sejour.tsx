@@ -9,13 +9,14 @@ import { Input } from "./ui/input";
 import { Specialite } from "@/types/specialite-type";
 import SejourType from "@/types/sejour-type";
 import { today } from "@/utils/today";
-import { use } from "react";
+import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Sejour() {
   const specialites = Object.values(Specialite);
   const user = useFetchUserProfile();
   const route = useRouter();
+  const [error, setError] = useState(null);
   const {
     register,
     handleSubmit,
@@ -44,7 +45,8 @@ export default function Sejour() {
       }
       console.log("Sejour created successfully");
       route.push("/profile");
-    } catch (error: unknown) {
+    } catch (error: any) {
+      setError(error.message);
       console.error("Error signing in:", error);
       // setError(error);
     }
@@ -114,6 +116,7 @@ export default function Sejour() {
           </Button>
         )}
       </form>
+      {error && <p className="text-red-500">{error}</p>}
     </section>
   );
 }
