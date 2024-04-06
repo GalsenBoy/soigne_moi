@@ -13,6 +13,7 @@ export default function AdminPage() {
   const [sejours, setSejour] = React.useState<SejourType[] | null>(null);
   const [medecins, setMedecin] = React.useState<MedecinType[] | null>(null);
   const [selectedMedecinId, setSelectedMedecinId] = React.useState<string>("");
+  const [error, setError] = React.useState(null);
 
   const user = useFetchUserProfile();
 
@@ -41,7 +42,8 @@ export default function AdminPage() {
       }
       console.log("successfully assigned doctor to sejour");
       setSelectedMedecinId("");
-    } catch (error) {
+    } catch (error: any) {
+      setError(error.message);
       console.error("Error assigning doctor to sejour:", error);
     }
   };
@@ -106,6 +108,7 @@ export default function AdminPage() {
             </div>
           ))}
         </div>
+        {error && <p className="text-red-500">{error}</p>}
       </section>
     ) : (
       <p>Page non autorisé</p>
