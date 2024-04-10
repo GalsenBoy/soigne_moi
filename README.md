@@ -1,8 +1,18 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+
+## Recuperer le projet en local
+<p>Cloner le repo du projet puis install les dépendences</p>
+
+```bash
+$ git clone https://github.com/GalsenBoy/soigne_moi
+$ npm i
+```
+
+
 ## Getting Started
 
-First, run the development server:
+Démarrer le serveur selon votre packet management :
 
 ```bash
 npm run dev
