@@ -6,6 +6,6 @@ export default interface UserType {
     firstName: string;
     lastName: string;
     zipCode: string;
-    roles: RoleType;
+    role: RoleType;
     sejour: SejourType[];
 }
