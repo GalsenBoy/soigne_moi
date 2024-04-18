@@ -20,7 +20,7 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex gap-2">
-          {user?.roles === "admin" && (
+          {user?.role === "admin" && (
             <Button className=" bg-gray-600 hover:bg-white hover:text-gray-600">
               <Link href={"/admin"}>Admin</Link>
             </Button>

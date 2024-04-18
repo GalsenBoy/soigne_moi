@@ -41,13 +41,14 @@ export default function AjouterMedecin() {
         );
       }
       console.log("Medecin créé avec succès", response);
+      route.push("/admin");
     } catch (error: any) {
       setError(error.message);
       console.error("Error creating medecin:", error);
     }
   };
 
-  if (user?.roles === "admin") {
+  if (user?.role === "admin") {
     return (
       <div>
         <h1 className="text-2xl text-center font-medium my-8">
@@ -60,10 +61,16 @@ export default function AjouterMedecin() {
           <div>
             <label htmlFor="lastName">Nom</label>
             <Input {...register("lastName", { required: true })} />
+            {errors.lastName && (
+              <span className="text-red-500">Ce champs est obligatoire</span>
+            )}
           </div>
           <div>
             <label htmlFor="firstName">Prénom</label>
             <Input {...register("firstName", { required: true })} />
+            {errors.firstName && (
+              <span className="text-red-500">Ce champs est obligatoire</span>
+            )}
           </div>
           <div>
             <select
@@ -77,10 +84,16 @@ export default function AjouterMedecin() {
                 </option>
               ))}
             </select>
+            {errors.specialite && (
+              <span className="text-red-500">Ce champs est obligatoire</span>
+            )}
           </div>
           <div>
             <label htmlFor="matricule">Matricule</label>
             <Input {...register("matricule", { required: true })} />
+            {errors.matricule && (
+              <span className="text-red-500">Ce champs est obligatoire</span>
+            )}
           </div>
           <Button type="submit" className="uppercase">
             Créer médecin

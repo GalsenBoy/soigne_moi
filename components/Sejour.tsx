@@ -51,72 +51,73 @@ export default function Sejour() {
       // setError(error);
     }
   };
+  if (user?.role !== "admin") {
+    return (
+      <section className="mt-16">
+        <h2 className="text-3xl text-center">Créer votre Sejour</h2>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="max-w-screen-md mx-auto [&>div*4] gap-8 flex flex-col items-center justify-center w-full h-full p-4 bg-white rounded-md shadow-md"
+        >
+          <div>
+            <label>Date d'entrée</label>
+            <Input
+              min={today}
+              type="date"
+              {...register("dateEntree", { required: true })}
+            />
+            {errors.dateEntree && (
+              <span className="text-red-500">Ce champ est obligatoire</span>
+            )}
+          </div>
 
-  return (
-    <section className="mt-16">
-      <h2 className="text-3xl text-center">Créer votre Sejour</h2>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="max-w-screen-md mx-auto [&>div*4] gap-8 flex flex-col items-center justify-center w-full h-full p-4 bg-white rounded-md shadow-md"
-      >
-        <div>
-          <label>Date d'entrée</label>
-          <Input
-            min={today}
-            type="date"
-            {...register("dateEntree", { required: true })}
-          />
-          {errors.dateEntree && (
-            <span className="text-red-500">Ce champ est obligatoire</span>
+          <div>
+            <label>Date de sortie</label>
+            <Input
+              min={today}
+              type="date"
+              {...register("dateSortie", { required: true })}
+            />
+            {errors.dateSortie && (
+              <span className="text-red-500">Ce champ est obligatoire</span>
+            )}
+          </div>
+
+          <div>
+            <label>Motif</label>
+            <Input type="text" {...register("motif", { required: true })} />
+            {errors.motif && (
+              <span className="text-red-500">Ce champ est obligatoire</span>
+            )}
+          </div>
+
+          <div>
+            <select
+              className="border-2 border-black rounded-md p-2 w-full"
+              {...register("specialite", { required: true })}
+            >
+              <option value="">Choisir une spécialité</option>
+              {specialites.map((specialite, key) => (
+                <option key={key} value={specialite}>
+                  {specialite}
+                </option>
+              ))}
+            </select>
+            {errors.specialite && (
+              <span className="text-red-500">Ce champ est obligatoire</span>
+            )}
+          </div>
+
+          {user?.role === "user" ? (
+            <Button type="submit">Enregistrer</Button>
+          ) : (
+            <Button>
+              <Link href="/login">Enregistrer</Link>
+            </Button>
           )}
-        </div>
-
-        <div>
-          <label>Date de sortie</label>
-          <Input
-            min={today}
-            type="date"
-            {...register("dateSortie", { required: true })}
-          />
-          {errors.dateSortie && (
-            <span className="text-red-500">Ce champ est obligatoire</span>
-          )}
-        </div>
-
-        <div>
-          <label>Motif</label>
-          <Input type="text" {...register("motif", { required: true })} />
-          {errors.motif && (
-            <span className="text-red-500">Ce champ est obligatoire</span>
-          )}
-        </div>
-
-        <div>
-          <select
-            className="border-2 border-black rounded-md p-2 w-full"
-            {...register("specialite", { required: true })}
-          >
-            <option value="">Choisir une spécialité</option>
-            {specialites.map((specialite, key) => (
-              <option key={key} value={specialite}>
-                {specialite}
-              </option>
-            ))}
-          </select>
-          {errors.specialite && (
-            <span className="text-red-500">Ce champ est obligatoire</span>
-          )}
-        </div>
-
-        {user ? (
-          <Button type="submit">Enregistrer</Button>
-        ) : (
-          <Button>
-            <Link href="/login">Enregistrer</Link>
-          </Button>
-        )}
-      </form>
-      {error && <p className="text-red-500">{error}</p>}
-    </section>
-  );
+        </form>
+        {error && <p className="text-red-500">{error}</p>}
+      </section>
+    );
+  }
 }
