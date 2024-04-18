@@ -51,10 +51,10 @@ export default function AdminPage() {
   React.useEffect(() => {
     getAllData({ endpoint: "sejour", setter: setSejour });
     getAllData({ endpoint: "medecin/limit", setter: setMedecin });
-  }, []);
+  }, [sejours, medecins]);
 
   {
-    return user?.roles === "admin" ? (
+    return user?.role === "admin" ? (
       <section>
         <h1 className="text-2xl font-semibold text-gray-800">Admin Page</h1>
         <Button className="m-2 bg-gray-600 hover:bg-white hover:text-gray-600">

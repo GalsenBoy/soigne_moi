@@ -53,29 +53,44 @@ export default function Register() {
             className="mb-4 "
             {...register("firstName", { required: true })}
           />
+          {errors.firstName && (
+            <span className="text-red-500">Ce champs est obligatoire</span>
+          )}
+
           <Input
             placeholder="Nom"
             className="mb-4 "
             {...register("lastName", { required: true })}
           />
+          {errors.lastName && (
+            <span className="text-red-500">Ce champs est obligatoire</span>
+          )}
           <Input
             placeholder="Email"
             className="mb-4 "
             type="email"
             {...register("email", { required: true })}
           />
+          {errors.email && (
+            <span className="text-red-500">Ce champs est obligatoire</span>
+          )}
           <Input
             placeholder="Mot de passe"
             className="mb-4 "
             type="password"
             {...register("password", { required: true })}
           />
+          {errors.password && (
+            <span className="text-red-500">Ce champs est obligatoire</span>
+          )}
           <Input
             placeholder="Code postal"
             className="mb-4 "
             {...register("zipCode", { required: true })}
           />
-
+          {errors.zipCode && (
+            <span className="text-red-500">Ce champs est obligatoire</span>
+          )}
           <Button
             className="bg-sky-500 hover:text-sky-500 hover:bg-white border border-sky-500 mt-4 "
             type="submit"
