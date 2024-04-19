@@ -7,9 +7,9 @@ export default function About() {
     <section>
       <div id="about-content">
         <h1>
-          Bienvenue sur le site web de l'Hôpital Sainte-Catherine, votre
-          destination de confiance pour des soins de santé exceptionnels dans un
-          environnement moderne et bienveillant.
+          Bienvenue sur le site web de Soigne moi, votre destination de
+          confiance pour des soins de santé exceptionnels dans un environnement
+          moderne et bienveillant.
         </h1>
         <Assistance />
         <Sejour />
